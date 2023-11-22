@@ -14,9 +14,7 @@ let currentCharacter: Character = {
   placeOfOrigin: "",
 };
 
-let nameInput: HTMLInputElement;
 let classGroupLabel: HTMLLabelElement;
-let classSelect: HTMLSelectElement;
 
 export function getCharacter(): Character {
   return currentCharacter;
@@ -34,14 +32,14 @@ export function registerCharacterDivListeners(
   profileDiv.addEventListener("import", importCharacter);
 
   // Name input
-  nameInput = characterDiv.querySelector(
+  const nameInput = characterDiv.querySelector(
     "#character-name-input"
   ) as HTMLInputElement;
 
   nameInput.addEventListener("input", updateCharacterName);
 
   // Class selection
-  classSelect = characterDiv.querySelector(
+  const classSelect = characterDiv.querySelector(
     "#character-class-select"
   ) as HTMLSelectElement;
   classGroupLabel = characterDiv.querySelector(
@@ -69,11 +67,11 @@ export function registerCharacterDivListeners(
   raceSelect.addEventListener("change", updateCharacterRace);
 
   // Place of origin input
-  nameInput = characterDiv.querySelector(
+  const pooInput = characterDiv.querySelector(
     "#character-placeOfOrigin-input"
   ) as HTMLInputElement;
 
-  nameInput.addEventListener("input", updateCharacterPoo);
+  pooInput.addEventListener("input", updateCharacterPoo);
 }
 
 // Character import
