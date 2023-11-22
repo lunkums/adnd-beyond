@@ -1,27 +1,29 @@
-import { Profile } from "../profile/profile";
-import { Character } from "./character.interface";
+import { ImportEvent } from "../profile/import-event";
+import { Character } from "./character";
 import { Class } from "./class";
 import { ClassGroupMap } from "./class-group";
 import { enumFromStringValue } from "./enum-utils";
 import { MaxLevel, MinLevel } from "./level";
 import { Race } from "./race";
 
-const Character: Character = {
+let currentCharacter: Character = {
   name: "",
-  class: Class.Bard,
+  class: Class.Fighter,
   level: 1,
-  race: Race.Dwarf,
+  race: Race.Human,
   placeOfOrigin: "",
 };
 
+let nameInput: HTMLInputElement;
 let classGroupLabel: HTMLLabelElement;
+let classSelect: HTMLSelectElement;
 
 export function getCharacter(): Character {
-  return Character;
+  return currentCharacter;
 }
 
 export function setCharacter(character: Character) {
-  alert(character);
+  currentCharacter = character;
 }
 
 export function registerCharacterDivListeners(
@@ -31,8 +33,15 @@ export function registerCharacterDivListeners(
   // Profile events
   profileDiv.addEventListener("import", importCharacter);
 
+  // Name input
+  nameInput = characterDiv.querySelector(
+    "#character-name-input"
+  ) as HTMLInputElement;
+
+  nameInput.addEventListener("input", updateCharacterName);
+
   // Class selection
-  const classSelect = characterDiv.querySelector(
+  classSelect = characterDiv.querySelector(
     "#character-class-select"
   ) as HTMLSelectElement;
   classGroupLabel = characterDiv.querySelector(
@@ -58,17 +67,26 @@ export function registerCharacterDivListeners(
 
   addRaceSelectionOptions(raceSelect);
   raceSelect.addEventListener("change", updateCharacterRace);
+
+  // Place of origin input
+  nameInput = characterDiv.querySelector(
+    "#character-placeOfOrigin-input"
+  ) as HTMLInputElement;
+
+  nameInput.addEventListener("input", updateCharacterPoo);
 }
 
 // Character import
 
-function importCharacter(event: CustomEvent) {
-  try {
-    const profile = JSON.parse(event.detail.fileContents) as Profile;
-    setCharacter(profile.character);
-  } catch (error) {
-    alert("Selected an invalid profile!");
-  }
+function importCharacter(event: ImportEvent) {
+  setCharacter(event.detail.profile.character);
+}
+
+// Name input
+
+function updateCharacterName(event: Event) {
+  const target = event.target as HTMLSelectElement;
+  currentCharacter.name = target.value;
 }
 
 // Class selection
@@ -79,6 +97,12 @@ function addClassSelectOptions(classSelect: HTMLSelectElement) {
     option.value = characterClass;
     option.innerHTML = characterClass;
     classSelect.appendChild(option);
+
+    if (characterClass === Class.Fighter) {
+      option.selected = true;
+    } else {
+      option.selected = false;
+    }
   });
 }
 
@@ -91,7 +115,7 @@ function updateClassGroupLabel(event: Event) {
 function updateCharacterClass(event: Event) {
   const target = event.target as HTMLSelectElement;
   const characterClass = enumFromStringValue(Class, target.value);
-  Character.class = characterClass;
+  currentCharacter.class = characterClass;
 }
 
 // Level selection
@@ -108,7 +132,7 @@ function addLevelSelectOptions(levelSelectElement: HTMLSelectElement) {
 
 function updateCharacterLevel(event: Event) {
   const target = event.target as HTMLSelectElement;
-  Character.level = Number(target.value);
+  currentCharacter.level = Number(target.value);
 }
 
 // Race selection
@@ -119,11 +143,23 @@ function addRaceSelectionOptions(raceSelect: HTMLSelectElement) {
     option.value = race;
     option.innerHTML = race;
     raceSelect.appendChild(option);
+
+    if (race === Race.Human) {
+      option.selected = true;
+    } else {
+      option.selected = false;
+    }
   });
 }
 
 function updateCharacterRace(event: Event) {
   const target = event.target as HTMLSelectElement;
   const race = enumFromStringValue(Race, target.value);
-  Character.race = race;
+  currentCharacter.race = race;
+}
+
+// Place of origin input
+function updateCharacterPoo(event: Event) {
+  const target = event.target as HTMLSelectElement;
+  currentCharacter.placeOfOrigin = target.value;
 }

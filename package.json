@@ -1,7 +1,7 @@
 {
   "name": "dnd-above",
-  "version": "1.0.0",
-  "description": "AD&D 2nd Edition Character Builder",
+  "version": "0.1.0",
+  "description": "An Advanced Dungeons & Dragons 2nd Edition Character Builder",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
@@ -20,5 +20,10 @@
     "webpack": "^5.76.3",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.13.2"
+  },
+  "dependencies": {
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "reflect-metadata": "^0.1.13"
   }
 }
