@@ -9,6 +9,65 @@
   </head>
   <body>
     <h1><%= htmlWebpackPlugin.options.title %></h1>
-    <canvas id="webgl-canvas" width="512" height="512"></canvas>
+    <h4>An Advanced Dungeons & Dragons 2nd Edition Character Builder</h2>
+    <div>
+      <div id="profile-div">
+        <h2>Profile</h2>
+        <form>
+          <label for="profile-import-for">Import:</label>
+          <input
+            type="file"
+            id="profile-import-input"
+            name="profile-import-for"
+            accept="application/JSON"
+          />
+          <br />
+          <br />
+          <label for="profile-export-for">Export:</label>
+          <button id="profile-export-pdf-button">PDF</button>
+          <button id="profile-export-json-button">JSON</button>
+        </form>
+      </div>
+      <div id="player-div">
+        <h2>Player</h2>
+        <form action="player-form-action">
+          <label for="player-name-for">Name:</label>
+          <input
+            type="text"
+            id="player-name-input"
+            name="player-name-for"
+            placeholder="John Smith"
+          />
+        </form>
+      </div>
+      <div id="character-div">
+        <h2>Character</h2>
+        <form action="character-form-action">
+          <label for="character-name-for">Name:</label>
+          <input
+            type="text"
+            id="character-name-input"
+            name="character-name-for"
+            placeholder="John Snow"
+          />
+          <br />
+          <br />
+          <label for="character-class-for">Class:</label>
+          <select name="character-class" id="character-class-select">
+          </select>
+          <label id="character-class-group-label"><em>(Rogue)</em></label>
+          <br />
+          <br />
+          <label for="character-level-for">Level:</label>
+          <select name="character-level" id="character-level-select">
+          </select>
+          <br />
+          <br />
+          <label for="character-race-for">Race:</label>
+          <select name="character-race" id="character-race-select">
+          </select>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

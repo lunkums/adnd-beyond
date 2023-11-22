@@ -6,6 +6,7 @@ module.exports = {
   devServer: {
     open: true, // Set to false to prevent the dev server from opening up automatically
     static: "./dist",
+    watchFiles: ["./src/index.html"],
   },
   devtool: "eval-source-map",
   module: {
