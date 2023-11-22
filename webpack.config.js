@@ -23,7 +23,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "D&D Above", // Replace this with the name of your app
+      title: "AD&D Beyond", // Replace this with the name of your app
       filename: "index.html",
       template: "src/index.html",
     }),
