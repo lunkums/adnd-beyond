@@ -15,6 +15,10 @@ module.exports = {
         test: /\.ts$/, // regex to match files with the .ts extension
         loader: "ts-loader",
       },
+      {
+        test: /\.pdf$/,
+        type: "asset/source",
+      },
     ],
   },
   output: {

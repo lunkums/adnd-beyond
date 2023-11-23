@@ -21,11 +21,7 @@ export function registerProfileDivListeners(profileDivElement: HTMLDivElement) {
   const exportJsonButton = profileDiv.querySelector(
     "#profile-export-json-button"
   ) as HTMLButtonElement;
-  const exportPdfButton = profileDiv.querySelector(
-    "#profile-export-pdf-button"
-  ) as HTMLButtonElement;
 
-  exportPdfButton.addEventListener("click", exportPdfFile);
   exportJsonButton.addEventListener("click", exportJsonFile);
 }
 
@@ -69,16 +65,10 @@ function getProfile(): Profile {
   };
 }
 
-function exportPdfFile(event: Event) {
-  // TODO: Export the profile to a form-fillable PDF.
-
-  // Prevent from submitting form
-  event.preventDefault();
-}
-
 function exportJsonFile(event: Event) {
   const profile = getProfile();
   const a = document.createElement("a");
+
   a.href = URL.createObjectURL(
     new Blob([JSON.stringify(profile, null, 2)], {
       type: "application/JSON",

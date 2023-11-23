@@ -3,6 +3,7 @@ import { Character } from "./character";
 import { Class } from "./class";
 import { ClassGroupMap } from "./class-group";
 import { enumFromStringValue } from "./enum-utils";
+import { exportToPdf } from "./exporter";
 import { MaxLevel, MinLevel } from "./level";
 import { Race } from "./race";
 
@@ -30,6 +31,12 @@ export function registerCharacterDivListeners(
 ) {
   // Profile events
   profileDiv.addEventListener("import", importCharacter);
+
+  const exportButton = characterDiv.querySelector(
+    "#character-export-pdf-button"
+  ) as HTMLButtonElement;
+
+  exportButton.addEventListener("click", exportCharacter);
 
   // Name input
   const nameInput = characterDiv.querySelector(
@@ -78,6 +85,15 @@ export function registerCharacterDivListeners(
 
 function importCharacter(event: ImportEvent) {
   setCharacter(event.detail.profile.character);
+}
+
+// Character export
+
+function exportCharacter(event: Event) {
+  exportToPdf(currentCharacter);
+
+  // Prevent from submitting form
+  event.preventDefault();
 }
 
 // Name input

@@ -21,7 +21,7 @@
       <div id="profile-div">
         <h2>Profile</h2>
         <form>
-          <label for="profile-import-for">Import:</label>
+          <label for="profile-import-for">Load from JSON:</label>
           <input
             type="file"
             id="profile-import-input"
@@ -30,11 +30,10 @@
           />
           <br />
           <br />
-          <label for="profile-export-for">Export:</label>
-          <button id="profile-export-pdf-button">PDF</button>
-          <button id="profile-export-json-button">JSON</button>
+          <label for="profile-export-for">Save as JSON:</label>
+          <button id="profile-export-json-button">Download</button>
         </form>
-        <h4>Export Options</h4>
+        <h4>Save Options</h4>
         <form>
           <label for="html">TODO: Add some options here.</label>
         </form>
@@ -58,6 +57,10 @@
       <div id="character-div">
         <h2>Character</h2>
         <form>
+          <label for="character-export-for">Export to PDF:</label>
+          <button id="character-export-pdf-button">Download</button>
+          <br />
+          <br />
           <label for="character-name-for">Name:</label>
           <input
             type="text"
