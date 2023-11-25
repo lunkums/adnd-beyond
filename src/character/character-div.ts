@@ -1,19 +1,19 @@
-import { ImportEvent } from "../profile/import-event";
+import { getPlayer } from "../player/player-div";
+import { AdndCharacter } from "./adnd-character";
 import { Character } from "./character";
 import { Class } from "./class";
-import { ClassGroupMap } from "./class-group";
 import { enumFromStringValue } from "./enum-utils";
 import { exportToPdf } from "./exporter";
 import { MaxLevel, MinLevel } from "./level";
 import { Race } from "./race";
 
-let currentCharacter: Character = {
+let currentCharacter: AdndCharacter = new AdndCharacter({
   name: "",
   class: Class.Fighter,
   level: 1,
   race: Race.Human,
   placeOfOrigin: "",
-};
+});
 
 let classGroupLabel: HTMLLabelElement;
 
@@ -22,16 +22,10 @@ export function getCharacter(): Character {
 }
 
 export function setCharacter(character: Character) {
-  currentCharacter = character;
+  currentCharacter = new AdndCharacter(character);
 }
 
-export function registerCharacterDivListeners(
-  characterDiv: HTMLDivElement,
-  profileDiv: HTMLDivElement
-) {
-  // Profile events
-  profileDiv.addEventListener("import", importCharacter);
-
+export function registerCharacterDivListeners(characterDiv: HTMLDivElement) {
   const exportButton = characterDiv.querySelector(
     "#character-export-pdf-button"
   ) as HTMLButtonElement;
@@ -54,7 +48,6 @@ export function registerCharacterDivListeners(
   ) as HTMLLabelElement;
 
   addClassSelectOptions(classSelect);
-  classSelect.addEventListener("change", updateClassGroupLabel);
   classSelect.addEventListener("change", updateCharacterClass);
 
   // Level selection
@@ -81,16 +74,10 @@ export function registerCharacterDivListeners(
   pooInput.addEventListener("input", updateCharacterPoo);
 }
 
-// Character import
-
-function importCharacter(event: ImportEvent) {
-  setCharacter(event.detail.profile.character);
-}
-
 // Character export
 
 function exportCharacter(event: Event) {
-  exportToPdf(currentCharacter);
+  exportToPdf(getPlayer(), currentCharacter);
 
   // Prevent from submitting form
   event.preventDefault();
@@ -120,16 +107,11 @@ function addClassSelectOptions(classSelect: HTMLSelectElement) {
   });
 }
 
-function updateClassGroupLabel(event: Event) {
-  const target = event.target as HTMLSelectElement;
-  const group: string = ClassGroupMap[target.value] || "Unknown";
-  classGroupLabel.innerHTML = `<em>(${group})</em>`;
-}
-
 function updateCharacterClass(event: Event) {
   const target = event.target as HTMLSelectElement;
   const characterClass = enumFromStringValue(Class, target.value);
   currentCharacter.class = characterClass;
+  classGroupLabel.innerHTML = `<em>(${currentCharacter.classGroup})</em>`;
 }
 
 // Level selection

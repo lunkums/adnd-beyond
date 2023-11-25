@@ -1,8 +1,11 @@
 // For class-transformer
 import "reflect-metadata";
 
-import { registerCharacterDivListeners } from "./character/character-div";
-import { registerPlayerDivListeners } from "./player/player-div";
+import {
+  registerCharacterDivListeners,
+  setCharacter,
+} from "./character/character-div";
+import { registerPlayerDivListeners, setPlayer } from "./player/player-div";
 import { ImportEvent } from "./profile/import-event";
 import { Profile } from "./profile/profile";
 import { registerProfileDivListeners } from "./profile/profile-div";
@@ -12,6 +15,8 @@ function onImport(event: ImportEvent) {
   const welcomeBannerSpan = document.getElementById("welcome-banner-span");
   const forms = document.forms;
 
+  setPlayer(profile.player);
+  setCharacter(profile.character);
   updateWelcomeBanner(profile, welcomeBannerSpan);
   updateForms(profile, forms);
 }
@@ -84,7 +89,7 @@ function main() {
   const characterDiv = document.getElementById(
     "character-div"
   ) as HTMLDivElement;
-  registerCharacterDivListeners(characterDiv, profileDiv);
+  registerCharacterDivListeners(characterDiv);
 
   // Functionality to set all fields when a profile is imported
   profileDiv.addEventListener("import", onImport);

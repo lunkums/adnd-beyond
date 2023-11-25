@@ -8,6 +8,10 @@ export function getPlayer(): Player {
   return currentPlayer;
 }
 
+export function setPlayer(player: Player) {
+  currentPlayer = player;
+}
+
 export function registerPlayerDivListeners(playerDiv: HTMLDivElement) {
   // Name selection
   const nameInput = playerDiv.querySelector(
